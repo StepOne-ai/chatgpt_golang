@@ -16,7 +16,7 @@ Welcome to the **OpenAI Go Module**! This Go module allows you to easily interac
 To install the module, use `go get`:
 
 ```bash
-go get github.com/yourusername/openai-go-module
+    go get github.com/StepOne-ai/chatgpt_golang
 ```
 
 ## Usage
@@ -29,22 +29,39 @@ To interact with OpenAI models, simply import the module and use the relevant fu
 package main
 
 import (
-    "fmt"
-    "github.com/yourusername/openai-go-module"
+	"fmt"
+	openai "github.com/StepOne-ai/chatgpt_golang"
+	"bufio"
+	"os"
+	"strings"
 )
 
+
 func main() {
-    // Initialize the client with your OpenAI API key
-    client := openai.NewClient("your-api-key")
+	client := openai.CreateClient(API_KEY)
 
-    // Call OpenAI model
-    response, err := client.CallModel("gpt-4", "Translate this text to French")
-    if err != nil {
-        fmt.Println("Error:", err)
-        return
-    }
+	for {
+		var prompt string
 
-    fmt.Println("Response from OpenAI:", response)
+		fmt.Print("> ")
+		scanner := bufio.NewScanner(os.Stdin)
+		if scanner.Scan() {
+			line := scanner.Text()
+			words := strings.Split(line, " ")
+			prompt = strings.Join(words, " ")
+		}
+		if err := scanner.Err(); err != nil {
+			fmt.Fprintln(os.Stderr, "reading standard input:", err)
+		}
+
+		resp, err := openai.GenerateResponse(client, prompt, "gpt-4o-mini")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("> " + resp)
+	}
 }
 ```
 
@@ -53,13 +70,13 @@ func main() {
 You can also check your API balance using this module:
 
 ```go
-balance, err := client.CheckBalance()
+balance, err := openai.GetBalance(API_KEY)
 if err != nil {
     fmt.Println("Error:", err)
     return
 }
 
-fmt.Printf("Your current balance is: $%.2f\n", balance)
+fmt.Printf("Your current balance is: $%.2f\n", balance.balance)
 ```
 
 ## Configuration
@@ -67,7 +84,7 @@ fmt.Printf("Your current balance is: $%.2f\n", balance)
 Make sure to set your OpenAI API key in your environment:
 
 ```bash
-export OPENAI_API_KEY="your-api-key"
+export API_KEY="your-api-key"
 ```
 
 Alternatively, you can pass the API key directly when initializing the client.
