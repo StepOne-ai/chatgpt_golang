@@ -44,14 +44,14 @@ func CreateClient(apiKey string) *GptClient {
 // The method uses the client's messages slice to store the history of the conversation.
 // The method uses the client's apiKey property to set the Authorization header of the request.
 func GenerateResponse(client *GptClient, prompt string, model string) (string, error) {
-	client.messages = append(client.messages, map[string]string{
+	messages := append(client.messages, map[string]string{
 		"role":    "user",
 		"content": prompt,
 	})
 
 	jsonData, err := json.Marshal(map[string]interface{}{
 		"model":    model,
-		"messages": client.messages,
+		"messages": messages,
 	})
 	if err != nil {
 		fmt.Println(err)
