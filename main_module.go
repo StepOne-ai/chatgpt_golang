@@ -1,4 +1,4 @@
-package chatgpt_golang
+package openai
 
 import (
 	"bytes"
