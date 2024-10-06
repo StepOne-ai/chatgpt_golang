@@ -79,15 +79,13 @@ if err != nil {
 fmt.Printf("Your current balance is: $%.2f\n", balance.balance)
 ```
 
-## Configuration
+## Models
 
-Make sure to set your OpenAI API key in your environment:
+Here is the list of all available models:
 
-```bash
-export API_KEY="your-api-key"
-```
+![image](https://github.com/user-attachments/assets/318267d6-adc9-4331-ba8b-8be732b23e06)
 
-Alternatively, you can pass the API key directly when initializing the client.
+For more information access https://proxyapi.ru
 
 ## Contributing
 
