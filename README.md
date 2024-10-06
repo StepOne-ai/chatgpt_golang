@@ -1,5 +1,3 @@
-Sure! Here's a sample `README.md` for your Golang module:
-
 ```markdown
 # 🤖 OpenAI Go Module
 
