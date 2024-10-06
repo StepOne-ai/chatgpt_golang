@@ -93,10 +93,6 @@ func GenerateResponse(client *GptClient, prompt string, model string) (string, e
 	}
 
 	response := data["choices"].([]interface{})[0].(map[string]interface{})["message"].(map[string]interface{})["content"].(string)
-	client.messages = append(client.messages, map[string]string{
-		"role":    "system",
-		"content": response,
-	})
 	
 	return response, nil
 }
